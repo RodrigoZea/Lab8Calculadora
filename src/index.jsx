@@ -29,19 +29,36 @@ export default class App extends Component {
     // eslint-disable-next-line no-restricted-globals
     if (!isNaN(buttonNumber)) {
       if (waiting) {
-        if (result.length < 10) {
+        if (result.length < 9) {
           this.setState({
             result: String(buttonNumber),
             waiting: false,
           })
         }
       } else {
-        this.setState({
-          result: result === '0' ? String(buttonNumber) : result + buttonNumber,
-        })
+        // eslint-disable-next-line no-lonely-if
+        if (result.length < 9) {
+          this.setState({
+            result: result === '0' ? String(buttonNumber) : result + buttonNumber,
+          })
+        }
       }
     } else {
-      this.handleOperation(button)
+      // eslint-disable-next-line no-lonely-if
+      if (button === '.') {
+        if (!(/\./).test(result)) {
+          this.setState({ result: `${result}.`, waiting: false })
+        }
+      } else if (button === 'C') {
+        this.setState({
+          value: null, result: '0', operator: null, waiting: false,
+        })
+      } else if (button === '⁺∕₋') {
+        const inverseValue = parseFloat(result) * -1
+        this.setState({ result: inverseValue })
+      } else {
+        this.handleOperation(button)
+      }
     }
   }
 
@@ -63,9 +80,28 @@ export default class App extends Component {
         newValue = mul(currValue, valueFloat)
       } else if (operator === '÷') {
         newValue = div(currValue, valueFloat)
+        // Ver si division no es exacta
+        if (!(newValue % 1 === 0)) {
+          // Si no es, entonces ver cuantos digitos tiene antes del .
+          let checker = String(newValue)
+          checker = checker.indexOf('.')
+          // Luego, calcular la cantidad de decimales que puede desplegar
+          const decimalLimit = 8 - checker
+          newValue = newValue.toFixed(decimalLimit)
+        }
+      } else if (operator === '=') {
+        newValue = valueFloat
+      } else if (operator === '%') {
+        newValue = currValue % valueFloat
       }
 
-      this.setState({ value: newValue, result: String(newValue) })
+      if (newValue < 0 || newValue > 999999999) {
+        newValue = 'ERROR'
+      }
+
+      if (result.length < 9) {
+        this.setState({ value: newValue, result: String(newValue) })
+      }
     }
 
     this.setState({ waiting: true, operator: nxtOperator })
@@ -83,5 +119,4 @@ export default class App extends Component {
   }
 }
 
-
-ReactDOM.render(<App />, document.querySelector('#root'))
+// ReactDOM.render(<App />, document.querySelector('#root'))

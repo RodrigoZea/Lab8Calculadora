@@ -10,13 +10,8 @@ describe('Test ResultBox component', () => {
         expect(rbx.text().includes("testText")).toBe(true)
     })
     // Returns pass
-    test('ResultBox text cant render negative numbers', () => {
+    test('ResultBox text can render negative numbers', () => {
         const rbx = shallow(<ResultBox resultText="-3" />)
-        expect(rbx.text().includes("ERROR")).toBe(true)
-    })
-    // Returns pass
-    test('ResultBox max result is 999999999', () => {
-        const rbx = shallow(<ResultBox resultText="1000000000" />)
-        expect(rbx.text().includes("ERROR")).toBe(true)
+        expect(rbx.text().includes("-3")).toBe(true)
     })
 })

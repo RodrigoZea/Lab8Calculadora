@@ -59,7 +59,7 @@ body {
 
 .results {
     color: white;
-    background: grey;
+    background: #202020;
     flex-grow: 1;
     font-size: 87px;
     font-weight: 100;

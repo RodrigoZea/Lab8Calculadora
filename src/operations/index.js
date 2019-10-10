@@ -10,7 +10,10 @@ function mul(number1, number2) {
 function div(number1, number2) {
   return number1 / number2
 }
+function eqs(number1, number2) {
+  return number2
+}
 
 module.exports = {
-  sum, sub, mul, div,
+  sum, sub, mul, div, eqs,
 }
