@@ -5,7 +5,7 @@ import '../main.css'
 export default class Button extends Component {
   render() {
     const {
-      btnTxt, gridStart, gridEnd, onClick,
+      btnTxt, gridStart, gridEnd, onClick, idName,
     } = this.props
 
     const divStyle = {
@@ -19,7 +19,7 @@ export default class Button extends Component {
 
     return (
       <div style={divStyle}>
-        <button type="submit" style={buttonStyle} onClick={() => onClick(btnTxt)}>
+        <button type="submit" id={`button-${idName}`} style={buttonStyle} onClick={() => onClick(btnTxt)}>
           {btnTxt}
         </button>
       </div>

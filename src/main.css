@@ -40,20 +40,20 @@ body {
 }
 
 .keyContainer div:nth-child(4n) button {
-    background-color: #f98410;
+    background-color: #604fdd;
     color: #fff6f9;
     flex-grow: 1;
     font-size: 36px;
-    outline: 1px solid #ca5200;
+    outline: 1px solid #3a3a62;
     font-weight: 100;
 }
 
 .keyContainer div:nth-child(19) button {
-    background-color: #f98410;
+    background-color: #604fdd;
     color: #fff6f9;
     flex-grow: 1;
     font-size: 36px;
-    outline: 1px solid #ca5200;
+    outline: 1px solid #3a3a62;
     font-weight: 100;
 }
 
@@ -69,4 +69,14 @@ body {
     padding-right: 10px;
     padding-top: 10px;
     text-align: right;
+}
+
+.mainContainer {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    left: 40%;
+    top: 5em;
 }

@@ -1,31 +1,12 @@
 /* eslint-disable  */
 import React from 'react'
 import { shallow, mount } from 'enzyme'
-import Keypad from './Keypad'
-import ResultBox from './ResultBox'
-import Button from './Button'
+import Keypad from '../Keypad'
+import ResultBox from '../ResultBox'
+import Button from '../Button'
 import App from './index'
 
 describe('Test app functionality', () => {
-    // In progress
-    test('get button then see if it renders its text', () => {
-        // Render app
-        const wrapper = shallow(<App />)
-
-        const kpad = wrapper.childAt(1).dive()
-        const btn = kpad.childAt(4).dive()
-
-        btn.simulate('click')
-        const rbox = shallow(<ResultBox resultText={btn.text()}/>)
-
-        expect(rbox.text().includes("7")).toBe(true)
-    })
-    test('Clicks a random number and gets added to the display box', () => {
-        const wrapper = shallow(<App />)
-        wrapper.instance().handleClick("7")
-        const rbox = wrapper.childAt(0).dive()
-        expect(rbox.text().includes("7")).toBe(true)
-    })
     test('ResultBox doesnt exceed 9 digits', () => {
         const wrapper = shallow(<App />)
         wrapper.setState({ result: '999999999' })
@@ -66,30 +47,64 @@ describe('Test app functionality', () => {
         expect(rbox.text()).toEqual('0')
     })
     test ('Operation (sum) works', () => {
-        const wrapper = shallow(<App />)
-        wrapper.instance().handleClick("3")
-        wrapper.instance().handleClick("+")
-        wrapper.instance().handleClick("3")
-        wrapper.instance().handleClick("=")
-        const rbox = wrapper.childAt(0).dive()
-        expect(rbox.text()).toEqual('6')
+        const wrapper = mount(<App />)
+
+        const btn7 = wrapper.find('#button-7')
+        btn7.simulate('click')
+
+        const btnsum = wrapper.find('#button-sum')
+        btnsum.simulate('click')
+
+        const btn4 = wrapper.find('#button-4')
+        btn4.simulate('click')
+
+        const btneq = wrapper.find('#button-eq')
+        btneq.simulate('click')
+
+        const rbox = wrapper.find('#results')
+        expect(rbox.text()).toEqual('11')
     })
     test('Operation (mul) works', () => {
-        const wrapper = shallow(<App />)
-        wrapper.instance().handleClick("3")
-        wrapper.instance().handleClick("x")
-        wrapper.instance().handleClick("3")
-        wrapper.instance().handleClick("=")
-        const rbox = wrapper.childAt(0).dive()
-        expect(rbox.text()).toEqual('9')
+        const wrapper = mount(<App />)
+
+        const btn7 = wrapper.find('#button-7')
+        btn7.simulate('click')
+
+        const btnmul = wrapper.find('#button-mul')
+        btnmul.simulate('click')
+
+        const btn4 = wrapper.find('#button-4')
+        btn4.simulate('click')
+
+        const btneq = wrapper.find('#button-eq')
+        btneq.simulate('click')
+
+        const rbox = wrapper.find('#results')
+        expect(rbox.text()).toEqual('28')
     })
     test('Operation (sub) works', () => {
-        const wrapper = shallow(<App />)
-        wrapper.instance().handleClick("7")
-        wrapper.instance().handleClick("-")
-        wrapper.instance().handleClick("3")
-        wrapper.instance().handleClick("=")
-        const rbox = wrapper.childAt(0).dive()
-        expect(rbox.text()).toEqual('4')
+        const wrapper = mount(<App />)
+
+        const btn7 = wrapper.find('#button-7')   
+        btn7.simulate('click')
+
+        const btnsub = wrapper.find('#button-min')
+        btnsub.simulate('click')
+
+        const btn4 = wrapper.find('#button-4')
+        btn4.simulate('click')
+
+        const btneq = wrapper.find('#button-eq')
+        btneq.simulate('click')
+        
+        const rbox = wrapper.find('#results')
+        expect(rbox.text()).toEqual('3')
+    })
+    test('Button calls onClick()', () => {
+        const wrapper = mount(<App />)
+        const btn = wrapper.find('#button-7')
+        btn.simulate('click')
+        const rbox = wrapper.find('#results')
+        expect(rbox.text()).toEqual('7')
     })
 })

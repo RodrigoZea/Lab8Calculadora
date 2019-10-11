@@ -7,7 +7,7 @@ export default class ResultBox extends Component {
     const { resultText } = this.props
 
     return (
-      <div className="results">
+      <div className="results" id="results">
         { resultText }
       </div>
     )
